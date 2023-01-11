@@ -13,6 +13,12 @@ class Users(db.Model):
     username = db.Column(db.String(255), unique = True, nullable = False)
     password = db.Column(db.String(255), nullable = False)
     
+    teams = db.relationship("Teams", backref = "user", lazy = True)
+    
+    def __init__(self, username, password):
+        self.username = username
+        self.password = password
+    
 class Teams(db.Model):
     
     __tablename__ = 'teams'
@@ -20,6 +26,12 @@ class Teams(db.Model):
     id = db.Column(db.Integer, primary_key= True, autoincrement = True)
     team_name = db.Column(db.String(255), unique=True, nullable= False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable= False)
+    
+    projects = db.relationship("Projects", backref = "team", lazy = True)
+    
+    def __init__(self, team_name, user_id):
+        self.team_name = team_name
+        self.user_id = user_id
     
 class Projects(db.Model):
     
@@ -30,7 +42,15 @@ class Projects(db.Model):
     desc = db.Column(db.String(255), nullable = False)
     completed = db.Column(db.Boolean, default= False)
     team_id = db.Column(db.Integer, db.ForeignKey('teams.id'), nullable= False)
-
+    
+    teams = db.relationship("Teams", backref = "project", lazy = True)
+    
+    def __init__(self, project_name, desc, completed, team_id):
+        self.project_name = project_name
+        self.desc = desc
+        self.completed = completed
+        self.team_id = team_id
+        
 def connect_to_db(app):
     app.config["SQLALCHEMY_DATABASE_URI"] = os.environ["POSTGRES_URI"]
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
