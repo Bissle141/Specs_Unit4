@@ -1,0 +1,57 @@
+h1 {
+    font-size: 3em;   
+    margin: 10px;
+}
+
+h2 {
+    font-size: 2em;
+    margin: 5px;
+}
+
+h3 {
+    font-size: 1em;
+    margin: 3px;
+}
+
+.vl {
+    border-left: 6px solid rgb(110, 110, 110);
+    height: 100%;
+}
+
+
+
+#body-containter {
+    transform: translateY(30%);
+    height: 50vh;
+
+    justify-self: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.login-register-container {
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-container {
+    display: flex;
+    justify-content: center;
+}
+
+.login-register-container form{
+    width: 60%;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.login-register-container form > * {
+    margin: 5px;
+}

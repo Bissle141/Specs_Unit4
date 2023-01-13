@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block PageTitle %} Login/Register {% endblock %}
+
+{% block body %}
+<div id="body-containter">
+
+    <div class="login-register-container">
+        <h1>Login</h1>
+        <div class="form-container">
+            <form action=" {{url_for('login_register')}} " method="POST">
+                {{ login_form.csrf_token}}
+                
+                {{ login_form.login_username.lable }}
+                {{ login_form.login_username }}
+                {{ login_form.login_password.lable }}
+                {{ login_form.login_password }}
+                {{ login_form.submit.lable }}
+                {{ login_form.submit}}
+                
+            </form>
+        </div>
+    </div>
+    
+    <div class="vl"></div>
+    
+    <div class="login-register-container">
+        <h1>Register</h1>
+        <div class="form-container">
+            <form action=" {{url_for('login_register')}} " method="POST">
+                {{ register_form.csrf_token}}
+                
+                {{ register_form.register_username.lable }}
+                {{ register_form.register_username }}
+                {{ register_form.register_password.lable }}
+                {{ register_form.register_password }}
+                {{ register_form.submit.lable }}
+                {{ register_form.submit}}
+                
+            </form>
+        </div>
+    </div>
+
+</div>
+
+    
+{% endblock %}
