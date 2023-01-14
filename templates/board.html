@@ -4,5 +4,21 @@
 
 {% block body %}
     <h1> Board</h1>
+
+    <div class="container">
+        {% for team in data %}
+            <h2> {{ team[0].team_name }} </h2>
+            <ul class="list-group">
+                {% for project in team[1] %}
+                <li class="list-group-item"> 
+                    <h3> {{ project.project_name }} </h3>
+                    <p> {{ project.desc }} </p>
+                </li>
+                
+                {% endfor %}
+            </ul>
+        {% endfor %}
+    </div>
+
 {% endblock %}
 

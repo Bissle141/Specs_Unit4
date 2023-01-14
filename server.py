@@ -11,25 +11,35 @@ user_id = 1
 
 @app.route("/")
 def home():
-    team_form = TeamForm()
-    
-    project_form = ProjectForm()
-    project_form.update_teams(Users.query.get(user_id).teams)
 
-    return render_template("home.html", team_form = team_form, project_form = project_form)
+    return render_template("home.html")
 
-@app.route("/login-register")
+@app.route("/login-register", methods=["GET", "POST"])
 def login_register():
     login_form = LoginForm()
     register_form = RegisterForm()
     
-    if login_form.validate_on_submit:
+    if login_form.validate_on_submit():
         # check if username is in database
         # if it is check that the password is the same as the one linked to the user
         # if both are true, set session username and user_id then nav to Home page with flash msg
-        username = login_form.login_username
-        password = login_form.login_password
-        print(username,password)
+        username = login_form.login_username.data
+        password = login_form.login_password.data
+        
+        user = Users.query.filter_by(username = username).first()
+        
+        if user is not None:
+            if password == user.password:
+                session["username"] = username
+                session["user_id"] = user.id
+                flash("Login Sucessful")
+                return redirect(url_for("home"))
+            else:
+                flash("Wrong password, please try again.")
+                return redirect(url_for("login_register"))
+        else:
+            flash("User does not exits, please try again or a new register.")
+            return redirect(url_for("login_register"))
         
         
     return render_template('login_register.html', login_form = login_form, register_form= register_form)
@@ -37,7 +47,28 @@ def login_register():
 # @app.route("/board/<username>")
 @app.route("/board")
 def board():
-    return render_template('board.html')
+    if session["username"] is None:
+        flash("Must be logged in to access Board")
+        return redirect(url_for('login_register'))
+    
+    data = {}
+    
+    teams = Teams.query.filter_by(user_id = session['user_id']).all()
+    for team in teams:
+        data[team.id] = [team, Projects.query.filter_by(team_id = team.id).all()]
+    
+    # print(data)
+    for team in data.values():
+        print(team)
+        print(team[0].team_name)
+        # print(team[1])
+        
+        for project in team[1]:
+            if project is not None:
+                print(project.project_name)
+        
+    
+    return render_template('board.html', data = data.values())
 
 @app.route("/add-new" )
 def add_new():
@@ -88,8 +119,10 @@ def add_project():
     
 @app.route("/logout")
 def logout():
-    del session.username
-    del session.user_id
+    del session["username"]
+    del session["user_id"]
+    
+    return redirect(url_for("home"))
 
 if __name__ == "__main__":
     connect_to_db(app)
