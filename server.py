@@ -40,14 +40,35 @@ def login_register():
         else:
             flash("User does not exits, please try again or a new register.")
             return redirect(url_for("login_register"))
+     
+    if register_form.validate_on_submit():
         
+        new_username = register_form.register_username.data
+        new_password = register_form.register_password.data
+        
+        if Users.query.filter_by(username = new_username).first() is not None:
+            flash("Username already in use")
+            return redirect(url_for('login_register'))
+        
+        else:
+            new_user = Users(new_username, new_password)
+            
+            db.session.add(new_user)
+            db.session.commit()
+            
+            flash("Registration complete, please log in.")
+            return redirect(url_for("login_register"))
+    else:
+        for error in register_form.register_password_confirm.errors:
+            flash(f"{error}")
         
     return render_template('login_register.html', login_form = login_form, register_form= register_form)
 
 # @app.route("/board/<username>")
 @app.route("/board")
 def board():
-    if session["username"] is None:
+    try: session["username"]
+    except:
         flash("Must be logged in to access Board")
         return redirect(url_for('login_register'))
     
@@ -56,18 +77,7 @@ def board():
     teams = Teams.query.filter_by(user_id = session['user_id']).all()
     for team in teams:
         data[team.id] = [team, Projects.query.filter_by(team_id = team.id).all()]
-    
-    # print(data)
-    for team in data.values():
-        print(team)
-        print(team[0].team_name)
-        # print(team[1])
-        
-        for project in team[1]:
-            if project is not None:
-                print(project.project_name)
-        
-    
+     
     return render_template('board.html', data = data.values())
 
 @app.route("/add-new" )

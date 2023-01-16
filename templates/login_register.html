@@ -3,6 +3,7 @@
 {% block PageTitle %} Login/Register {% endblock %}
 
 {% block body %}
+
 <div id="body-containter">
 
     <div class="login-register-container">
@@ -12,9 +13,9 @@
                 {{ login_form.csrf_token}}
                 
                 {{ login_form.login_username.lable }}
-                {{ login_form.login_username }}
+                {{ login_form.login_username(placeholder = "Username") }}
                 {{ login_form.login_password.lable }}
-                {{ login_form.login_password }}
+                {{ login_form.login_password(placeholder = "Password") }}
                 {{ login_form.submit.lable }}
                 {{ login_form.submit}}
                 
@@ -31,9 +32,11 @@
                 {{ register_form.csrf_token}}
                 
                 {{ register_form.register_username.lable }}
-                {{ register_form.register_username }}
+                {{ register_form.register_username(placeholder = "Username") }}
                 {{ register_form.register_password.lable }}
-                {{ register_form.register_password }}
+                {{ register_form.register_password(placeholder = "Password") }}
+                {{ register_form.register_password_confirm.lable }}
+                {{ register_form.register_password_confirm(placeholder = "Re-enter password") }}
                 {{ register_form.submit.lable }}
                 {{ register_form.submit}}
                 

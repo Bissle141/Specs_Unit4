@@ -1,13 +1,13 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, SelectField, BooleanField, TextAreaField, PasswordField
-from wtforms.validators import DataRequired, Length, InputRequired
+from wtforms.validators import DataRequired, Length, InputRequired, EqualTo
 
 class TeamForm(FlaskForm):
     team_name = StringField("team name", validators = [DataRequired(), Length(min=4, max=255)])
     submit = SubmitField("submit")
     
 class ProjectForm(FlaskForm):
-    project_name = StringField("project name", validators= [DataRequired(),Length(min=4, max=255)])
+    project_name = StringField("project name", validators= [DataRequired(),Length(min=4, max=255)],)
     desc = TextAreaField('desc')
     completed = BooleanField('completed status')
     team_selection = SelectField('team')
@@ -24,6 +24,7 @@ class LoginForm(FlaskForm):
 class RegisterForm(FlaskForm):
     register_username = StringField("username", validators=[InputRequired(), Length(max=255, min=4)])
     register_password = PasswordField("password", validators=[InputRequired()])
+    register_password_confirm = PasswordField("password_confirm", validators= [EqualTo('register_password', message='Paswords must match')])
     submit = SubmitField("submit")
     
     
