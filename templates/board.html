@@ -5,19 +5,28 @@
 {% block body %}
     <h1> Board</h1>
 
-    <div class="container">
+    <div class="container p-3 my-3 border">
         {% for team in data %}
             <h2> {{ team[0].team_name }} </h2>
             <ul class="list-group">
                 {% for project in team[1] %}
                 <li class="list-group-item"> 
-                    <h3> {{ project.project_name }} </h3>
+                    <h3 class="text-primary"> {{ project.project_name }} </h3>
                     <p> {{ project.desc }} </p>
+                    {% if project.completed == True %}
+                        <p class="text-secondary">Completed</p>
+                    {% else %}
+                        <p class="text-secondary">In Progress</p>
+                    {% endif %}
                 </li>
                 
                 {% endfor %}
             </ul>
         {% endfor %}
+    </div>
+
+    <div class="position-sticky">
+        <a href="{{url_for('add_new')}}"><button type="button" class="btn btn-secondary btn-circle btn-xl" >+</button></a>
     </div>
 
 {% endblock %}

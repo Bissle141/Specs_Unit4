@@ -84,6 +84,13 @@ def board():
 def add_new():
     team_form = TeamForm()
     
+    # if team_form.validate_on_submit():
+    #     new_team_name = team_form.team_name.data
+        
+    #     if Teams.query.filter_by(team_name= new_team_name) is None:
+    #         Teams.
+            
+
     project_form = ProjectForm()
     project_form.update_teams(Users.query.get(user_id).teams)
     

@@ -4,33 +4,33 @@
 
 {% block body %}
 
-<div class="form-container">
-    <h1>New Team</h1>
+<div class="form-container container p-3 my-3 border">
+    <h1>Add A New Team</h1>
     <form action=" {{url_for('add_team')}} " method="POST">
         {{ team_form.csrf_token() }}
         
         {{ team_form.team_name.lable }} 
-        {{ team_form.team_name }}
+        {{ team_form.team_name(placeholder = "Team Name", class="form-control") }}
         {{ team_form.submit.lable }} 
-        {{ team_form.submit }}
+        {{ team_form.submit(class="btn btn-primary mb-3") }}
     </form>
 </div>
 
-<div class="form-containter">
-    <h1>New Project</h1>
+<div class="form-containter container p-3 my-3 border">
+    <h1>Add A New Project</h1>
     <form action=" {{ url_for('add_project') }} " method="POST">
         {{ project_form.csrf_token() }}
         
         {{ project_form.project_name.lable }}
-            {{ project_form.project_name }}
+            {{ project_form.project_name(placeholder = "Project Name", class="form-control") }}
         {{ project_form.desc.lable }}
-            {{ project_form.desc }}
+            {{ project_form.desc(placeholder = "Description", class="form-control") }}
         {{ project_form.completed.lable }}
-            {{ project_form.completed }}
+            {{ project_form.completed(class="form-check-input") }}
         {{ project_form.team_selection.lable }}
-            {{ project_form.team_selection }}
+            {{ project_form.team_selection(class="form-select") }}
         {{ project_form.submit.lable }}
-            {{ project_form.submit }}
+            {{ project_form.submit(class="btn btn-primary mb-3") }}
         
     </form>
 </div>

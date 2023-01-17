@@ -8,16 +8,16 @@
 
     <div class="login-register-container">
         <h1>Login</h1>
-        <div class="form-container">
+        <div class="form-container d-flex justify-content-center">
             <form action=" {{url_for('login_register')}} " method="POST">
                 {{ login_form.csrf_token}}
                 
                 {{ login_form.login_username.lable }}
-                {{ login_form.login_username(placeholder = "Username") }}
+                {{ login_form.login_username(placeholder = "Username", class="form-control") }}
                 {{ login_form.login_password.lable }}
-                {{ login_form.login_password(placeholder = "Password") }}
+                {{ login_form.login_password(placeholder = "Password", class="form-control") }}
                 {{ login_form.submit.lable }}
-                {{ login_form.submit}}
+                {{ login_form.submit(class="btn btn-primary mb-3 mx-auto" )}}
                 
             </form>
         </div>
@@ -32,13 +32,13 @@
                 {{ register_form.csrf_token}}
                 
                 {{ register_form.register_username.lable }}
-                {{ register_form.register_username(placeholder = "Username") }}
+                {{ register_form.register_username(placeholder = "Username", class="form-control") }}
                 {{ register_form.register_password.lable }}
-                {{ register_form.register_password(placeholder = "Password") }}
+                {{ register_form.register_password(placeholder = "Password", class="form-control") }}
                 {{ register_form.register_password_confirm.lable }}
-                {{ register_form.register_password_confirm(placeholder = "Re-enter password") }}
+                {{ register_form.register_password_confirm(placeholder = "Re-enter password", class="form-control") }}
                 {{ register_form.submit.lable }}
-                {{ register_form.submit}}
+                {{ register_form.submit(class="btn btn-primary mb-3 mx-auto")}}
                 
             </form>
         </div>
